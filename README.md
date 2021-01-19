@@ -1,68 +1,80 @@
-[//]: # (Image References)
+# Machine Learning Engineer Nanodegree
 
-[image1]: ./images/sample_dog_output.png "Sample Output"
-[image2]: ./images/vgg16_model.png "VGG-16 Model Layers"
-[image3]: ./images/vgg16_model_draw.png "VGG16 Model Figure"
+## Capstone Project
+Daisuke Kuwabara
+September 11th, 2020
 
+## I. Definition
+### Project Overview
+ This is the project “Dog Breed Classifier” using the Convolutional Neural
+Networks(CNN). In this project, the algorithm will identify the dog breed given an
+image of a dog. When the algorithm receive the image of human, it extrapolates its
+learned experiences and identify the resembling dog breed.
 
-## Project Overview
+## Problem Statement
+ For this project, the main goal is classifying the dog and human images with dog
+breed respectively. To achieve this goal, several algorithms are implemented. The
+output is defined by each algorithm using conditional statements. 60% accuracy is
+set as the border line for the final output.
 
-Welcome to the Convolutional Neural Networks (CNN) project in the AI Nanodegree! In this project, you will learn how to build a pipeline that can be used within a web or mobile app to process real-world, user-supplied images.  Given an image of a dog, your algorithm will identify an estimate of the canine’s breed.  If supplied an image of a human, the code will identify the resembling dog breed.  
-
-![Sample Output][image1]
-
-Along with exploring state-of-the-art CNN models for classification and localization, you will make important design decisions about the user experience for your app.  Our goal is that by completing this lab, you understand the challenges involved in piecing together a series of models designed to perform various tasks in a data processing pipeline.  Each model has its strengths and weaknesses, and engineering a real-world application often involves solving many problems without a perfect answer.  Your imperfect solution will nonetheless create a fun user experience!
-
-
-## Project Instructions
-
-### Instructions
-
-1. Clone the repository and navigate to the downloaded folder.
-	
-	```	
-		git clone https://github.com/udacity/deep-learning-v2-pytorch.git
-		cd deep-learning-v2-pytorch/project-dog-classification
-	```
-    
-__NOTE:__ if you are using the Udacity workspace, you *DO NOT* need to re-download the datasets in steps 2 and 3 - they can be found in the `/data` folder as noted within the workspace Jupyter notebook.
-
-2. Download the [dog dataset](https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/dogImages.zip).  Unzip the folder and place it in the repo, at location `path/to/dog-project/dogImages`.  The `dogImages/` folder should contain 133 folders, each corresponding to a different dog breed.
-3. Download the [human dataset](http://vis-www.cs.umass.edu/lfw/lfw.tgz).  Unzip the folder and place it in the repo, at location `path/to/dog-project/lfw`.  If you are using a Windows machine, you are encouraged to use [7zip](http://www.7-zip.org/) to extract the folder. 
-4. Make sure you have already installed the necessary Python packages according to the README in the program repository.
-5. Open a terminal window and navigate to the project folder. Open the notebook and follow the instructions.
-	
-	```
-		jupyter notebook dog_app.ipynb
-	```
-
-__NOTE:__ While some code has already been implemented to get you started, you will need to implement additional functionality to successfully answer all of the questions included in the notebook. __Unless requested, do not modify code that has already been included.__
-
-__NOTE:__ In the notebook, you will need to train CNNs in PyTorch.  If your CNN is taking too long to train, feel free to pursue one of the options under the section __Accelerating the Training Process__ below.
-
-
-
-## (Optionally) Accelerating the Training Process 
-
-If your code is taking too long to run, you will need to either reduce the complexity of your chosen CNN architecture or switch to running your code on a GPU.  If you'd like to use a GPU, you can spin up an instance of your own:
-
-#### Amazon Web Services
-
-You can use Amazon Web Services to launch an EC2 GPU instance. (This costs money, but enrolled students should see a coupon code in their student `resources`.)
-
-## Evaluation
-
-Your project will be reviewed by a Udacity reviewer against the CNN project rubric.  Review this rubric thoroughly and self-evaluate your project before submission.  All criteria found in the rubric must meet specifications for you to pass.
-
-
-## Project Submission
-
-Your submission should consist of the github link to your repository.  Your repository should contain:
-- The `dog_app.ipynb` file with fully functional code, all code cells executed and displaying output, and all questions answered.
-- An HTML or PDF export of the project notebook with the name `report.html` or `report.pdf`.
-
-Please do __NOT__ include any of the project data sets provided in the `dogImages/` or `lfw/` folders.
-
-### Ready to submit your project?
-
-Click on the "Submit Project" button in the classroom and follow the instructions to submit!
+## Metrics
+ Since this task is simply the classification task, accuracy rate is used as metrics in this
+project. 
+II. Analysis
+Data Exploration
+ Datasets include default images folder of dog an human images. “dogImages” folder
+contains 13233 total dog images. This folder are divided into three, train, valid, test
+folders. “lfw” folder contains 13233 total human images. Dog images and human images
+are used as inputs in this algorithm. “my_images” folder containing several images is
+used for testing the trained algorithm.
+Exploratory Visualization
+ There is no visualization except the images.
+Algorithms and Techniques
+ As I mentioned before, several algorithms are used in this project. First of all, OpenCV's
+implementation of Haar feature-based cascade classifiers is used to classify the human
+images. Secondly, Pre-trained model, VGG-16 by Pytorch is implemented to classify dog
+images. Finally the original algorithm is implemented using Transfer Learning.
+ Dropout used in the training process prevents the coadaptation of neurons.
+Reference: https://arxiv.org/pdf/1207.0580.pdf
+Benchmark
+ I used the research paper, “Modified Deep Neural Networks for Dog Breeds
+Identification” by Shane Vahidnia, Stanford University as my benchmark.
+http://cs231n.stanford.edu/reports/2015/pdfs/fcdh_FinalReport.pdf
+III. Methodology
+Data Preprocessing
+ For the data preprocessing purpose, Data Argumentation is the way to simulate the
+invariant representation. In the algorithm, resizing the image and rotation of the image. We
+expand the data and avoid the overfitting by generalizing the training data. We transform
+the Numpy arrays into the tensor by ”ToTensor” so that GPU will run on them.
+Normalization is used for the purpose of scaling.
+Implementation
+ Implementation is made in the following order.
+ First, Human detector is created importing the algorithm from OpenCV’s module.
+Then,Dog detector is created using VGG-16 model by Pytorch. This model will run on
+GPU. These model have high accuracy rate.
+ After that, I created CNN architecture to classify the dog breed.This algorithm performs
+quite poorly since it only contains thousands of images which is far from sufficient
+amount to train the algorithm. Plus, algorithm needs to be more complicated with more
+layers.
+ Transfer Learning is applied to create a new CNN by modifying the output layer. Note
+that the training process takes a time even with GPU.
+Refinement
+ I set the Epoch as 20 but around the end of training, while Training Loss is converging,
+Validation Loss remains same, or rather increased. I can try different number of Epoch
+such as 15 to avoid overfitting.
+ For the implementation, the condition is used to classify the images. This is still
+possible since the classification task is not complicated as a whole. 
+IV. Results
+Model Evaluation and Validation
+ It has more than 80% of accuracy rate. This is really good accuracy even compared
+with other model introduced in the paper. However, special attention need to be paid to
+the number of inputs and outputs every time models are compared.
+Justification
+ It is over 60%, so it passed the benchmark
+V. Conclusion
+Free-Form Visualization
+Reflection
+Improvement
+For Dog Image classification, adding more layers will potentially improve the initial
+accuracy of the model. Also, I can use the confusion matrix and so for the evaluation. I’m
+wondering things are much more complicated if there is cat classifier in this project.
