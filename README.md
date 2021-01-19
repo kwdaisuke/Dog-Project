@@ -1,4 +1,4 @@
-# Machine Learning Engineer Nanodegree
+# Dog Project
 ![](https://www.rd.com/wp-content/uploads/2020/09/GettyImages-1164883886.jpg)
 
 ## Capstone Project
