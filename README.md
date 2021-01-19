@@ -80,7 +80,7 @@ the number of inputs and outputs every time models are compared.
  It is over 60%, so it passed the benchmark
 
 ## V. Conclusion
-## Improvement
+### Improvement
 For Dog Image classification, adding more layers will potentially improve the initial
 accuracy of the model. Also, I can use the confusion matrix and so for the evaluation. I’m
 wondering things are much more complicated if there is cat classifier in this project.
